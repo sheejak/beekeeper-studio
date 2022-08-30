@@ -13,6 +13,8 @@
           @close="close"
           @closeAll="closeAll"
           @closeOther="closeOther"
+          @closeRight="closeRight"
+          @closeLeft="closeLeft"
           @duplicate="duplicate"
           ></core-tab-header>
       </Draggable>
@@ -367,6 +369,26 @@
         const others = _.without(this.tabItems, tab)
         this.$store.dispatch('tabs/remove', others)
         this.setActiveTab(tab)
+        if (tab.queryId) {
+          this.$store.dispatch('data/queries/reload', tab.queryId)
+        }
+      },
+      closeRight(tab) {
+        const rightTabs = _.chain(this.tabItems)
+          .dropWhile((tabItem: OpenTab) => tabItem !== tab)
+          .tail()
+          .value();
+        this.$store.dispatch('tabs/remove', rightTabs);
+        if (tab.queryId) {
+          this.$store.dispatch('data/queries/reload', tab.queryId)
+        }
+      },
+      closeLeft(tab) {
+        const leftTabs = _.chain(this.tabItems)
+          .dropRightWhile((tabItem: OpenTab) => tabItem !== tab)
+          .dropRight(1)
+          .value();
+        this.$store.dispatch('tabs/remove', leftTabs);
         if (tab.queryId) {
           this.$store.dispatch('data/queries/reload', tab.queryId)
         }

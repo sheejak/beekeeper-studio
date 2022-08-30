@@ -91,6 +91,8 @@ import TabIcon from './tab/TabIcon.vue'
           { name: "Close", slug: 'close', handler: ({event}) => this.maybeClose(event)},
           { name: "Close Others", slug: 'close-others', handler: ({item}) => this.$emit('closeOther', item)},
           { name: 'Close All', slug: 'close-all', handler: ({item}) => this.$emit('closeAll', item)},
+          { name: 'Close Right', slug: 'close-right', handler: ({item}) => this.$emit('closeRight', item)},
+          { name: 'Close Left', slot: 'close-left', handler: ({item}) => this.$emit('closeLeft', item)},
           { name: "Duplicate", slug: 'duplicate', handler: ({item}) => this.$emit('duplicate', item) }
         ]
       },
